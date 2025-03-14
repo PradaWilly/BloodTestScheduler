@@ -19,8 +19,7 @@ public interface QueueInterface {
     public Object frontElement();
 
     // Add an element to the queue
-    public void enqueue(Object element);
-
+    public void enqueue(int priorityKey, Patient patient);
     // Remove and return the front element of the queue
     public Object dequeue();
 }

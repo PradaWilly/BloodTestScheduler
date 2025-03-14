@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 public class MyQueue implements QueueInterface{
     
-    private ArrayList<Patient> qQueue;
+    private ArrayList<PQElement> qQueue;
     
     //constructor
     public MyQueue(){
-        qQueue = new ArrayList<Patient>();
+        qQueue = new ArrayList<>();
     }
     
     //check if queue is empty
@@ -31,26 +31,37 @@ public class MyQueue implements QueueInterface{
     
     //get patient at front
     public Patient frontElement() {
-        if (qQueue.size() > 0) {
-            return qQueue.get(0);
-        } else {
-            return null;
-        }
+        return qQueue.isEmpty() ? null : (Patient) qQueue.get(0).getElement();
     }
 
     //add patient to queue
-    public void enqueue(Object element) {
-        qQueue.add((Patient) element);
-    }
-
-    //remove patient at front of queue
-    public Patient dequeue() {
-        if (qQueue.size() > 0) {
-            return qQueue.remove(0);
+     public void enqueue(int priorityKey, Patient patient) {
+        int insertIndex = findInsertPosition(priorityKey);
+        PQElement newElement = new PQElement(priorityKey, patient);
+        
+        if (insertIndex >= qQueue.size()) {
+            qQueue.add(newElement); // append to end if highest priority
         } else {
-            return null;
+            qQueue.add(insertIndex, newElement); // insert normally
         }
     }
+     
+     // find correct position to inser in queue
+    private int findInsertPosition(int priorityKey) {
+        for (int i = 0; i < qQueue.size(); i++) {
+            if (qQueue.get(i).getPriorityKey() > priorityKey) {
+                return i; //insert before lower priority
+            }
+        }
+        return qQueue.size(); // insert at the end
+    }
+
     
+    //remove patient at front of queue
+    public Patient dequeue() {
+        return qQueue.isEmpty() ? null: (Patient) qQueue.remove(0).getElement();
+    }
+    
+  
     
 }
