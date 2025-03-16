@@ -62,7 +62,11 @@ public class MyQueue implements QueueInterface{
     public Patient dequeue() {
         return qQueue.isEmpty() ? null: (Patient) qQueue.remove(0).getElement();
     }
+
+    public ArrayList<PQElement> getqQueue() {
+        return qQueue;
+    }
     
-  
+    
     
 }

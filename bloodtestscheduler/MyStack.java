@@ -12,11 +12,10 @@ import java.util.ArrayList;
  */
 public class MyStack implements StackInterface{
     
-    private ArrayList<Patient> theStack; // Stack to store Patient objects
+    private ArrayList<Patient> theStack; //stack to store patien objects
 
     
      //constructor
-    
     public MyStack() {
         theStack = new ArrayList<>();
     }
@@ -50,9 +49,9 @@ public class MyStack implements StackInterface{
         return theStack.size();
     }
 
-    /**
-     * Returns the last 5 patients who did not show up.
-     */
+    
+     //returns the last 5 patients who did not show up.
+     
     public ArrayList<Patient> getLastFiveNoShows() {
         ArrayList<Patient> lastFive = new ArrayList<>();
         int count = Math.min(theStack.size(), 5); //get last 5 patients

@@ -16,9 +16,8 @@ public class Patient {
     private String gpDetails;
     private boolean fromHospital;
     
-    public Patient(String name, String priority, int age, String gpDetails, boolean fromHospital){
+    public Patient(String name, int age, String gpDetails, boolean fromHospital){
         this.name = name;
-        this.priority = priority;  // 1=urgetn, 2=medium 3=low
         this.age = age;
         this.gpDetails = gpDetails;
         this.fromHospital = fromHospital;
@@ -32,13 +31,6 @@ public class Patient {
         this.name = name;
     }
 
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
 
     public int getAge() {
         return age;
