@@ -18,7 +18,7 @@ public class Patient {
     
     public Patient(String name, String priority, int age, String gpDetails, boolean fromHospital){
         this.name = name;
-        this.priority = priority;
+        this.priority = priority;  // 1=urgetn, 2=medium 3=low
         this.age = age;
         this.gpDetails = gpDetails;
         this.fromHospital = fromHospital;

@@ -10,10 +10,13 @@ package bloodtestscheduler;
  */
 public class BloodTestScheduler {
 
+    public static void main(String[] args) {
+        new BloodTestSchedulerGUI().setVisible(true);
+    }
     /**
      * @param args the command line arguments
      */
- 
+        
     }
     
 

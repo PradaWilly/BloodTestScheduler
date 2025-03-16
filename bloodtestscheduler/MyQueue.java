@@ -14,10 +14,11 @@ public class MyQueue implements QueueInterface{
     
     private ArrayList<PQElement> qQueue;
     
+    
     //constructor
     public MyQueue(){
-        qQueue = new ArrayList<>();
-    }
+        qQueue = new ArrayList<>();    
+    }  
     
     //check if queue is empty
     public boolean isEmpty(){
