@@ -10,8 +10,7 @@ package bloodtestscheduler;
  * @author Cosmin
  */
 public class Patient {
-    private String name;
-    private String priority;
+    private String name;    
     private int age;
     private String gpDetails;
     private boolean fromHospital;

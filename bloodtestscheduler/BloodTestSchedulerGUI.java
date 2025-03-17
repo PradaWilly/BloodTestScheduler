@@ -43,10 +43,38 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         noShowStack.push(new Patient("Emma Taylor", 35, "Dr. Ryan", true));
         noShowStack.push(new Patient("James Anderson", 10, "Dr. Hendy", false));
         noShowStack.push(new Patient("Olivia Martinez", 35, "Dr. Tom", true));
-;
+    }
+    
+    
+    private void displayNextPatient() {
+    if (patientQueue.isEmpty()) {
+        nextPatientTF.setText("No more patients in the queue.");
+        return;
     }
 
- 
+    //display next patient
+    Patient nextPatient = patientQueue.dequeue();
+
+    nextPatientTF.setText("Name: " + nextPatient.getName() + ", Age: " + nextPatient.getAge() + ", GP: " + nextPatient.getGpDetails());
+}
+
+
+    private void displayPatients(ArrayList<PQElement> queueList, int index) {
+        //stop method when index is larger than size of queue
+        if (index >= queueList.size()) {
+        return; 
+    }
+        //declare
+        PQElement element = queueList.get(index);
+        Patient patient = (Patient) element.getElement();
+        
+        //append patient to text area
+        patientTA.append("Priority: " + element.getPriorityKey() + ", Name: " + patient.getName() +  ", Age: " + patient.getAge() + ", GP Details: " + patient.getGpDetails() +  ", From Ward: " + patient.isFromHospital() + "\n");
+        displayPatients(queueList, index + 1); //recursiveness
+}
+
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,6 +88,8 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         priorityLbl = new javax.swing.JLabel();
         noShowLbl = new javax.swing.JLabel();
         patientList = new javax.swing.JLabel();
+        dspNextPatientBtn = new javax.swing.JButton();
+        nextPatientTF = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,6 +123,13 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
         patientList.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         patientList.setText("Patient List");
 
+        dspNextPatientBtn.setText("Display Next Patient");
+        dspNextPatientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dspNextPatientBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,15 +150,23 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(87, 87, 87))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(224, 224, 224)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(223, 223, 223)
                 .addComponent(dspPatientList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(dspNoShowBtn)
-                .addGap(283, 283, 283))
+                .addGap(282, 282, 282))
             .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(priorityLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(priorityLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(569, 569, 569)
+                        .addComponent(dspNextPatientBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(391, 391, 391)
+                        .addComponent(nextPatientTF, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -135,23 +180,27 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(patientList, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dspNoShowBtn)
                     .addComponent(dspPatientList))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(priorityLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addComponent(dspNextPatientBtn)
+                .addGap(18, 18, 18)
+                .addComponent(nextPatientTF, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void dspNoShowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dspNoShowBtnActionPerformed
-        
+
         //clear ta
         noShowTA.setText("");
         
@@ -166,18 +215,19 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_dspNoShowBtnActionPerformed
 
     private void dspPatientListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dspPatientListActionPerformed
+        //this button calls the displayPatients method
+
         //clear ta
         patientTA.setText("");
         
         //display patients
         ArrayList<PQElement> queueList = patientQueue.getqQueue();
-
-        // Display the patient queue in the text area
-        for (PQElement element : queueList) {
-        Patient patient = (Patient) element.getElement();
-        patientTA.append("Priority: " + element.getPriorityKey() + ",   Name: " + patient.getName() + ",   Age: " + patient.getAge() + ",   GP Details: " + patient.getGpDetails() + ",   From Ward:" + patient.isFromHospital() + "\n");
-        }
+        displayPatients(queueList, 0);   //start recursion from index 0
     }//GEN-LAST:event_dspPatientListActionPerformed
+
+    private void dspNextPatientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dspNextPatientBtnActionPerformed
+        displayNextPatient();
+    }//GEN-LAST:event_dspNextPatientBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,10 +265,12 @@ public class BloodTestSchedulerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton dspNextPatientBtn;
     private javax.swing.JButton dspNoShowBtn;
     private javax.swing.JButton dspPatientList;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField nextPatientTF;
     private javax.swing.JLabel noShowLbl;
     private javax.swing.JTextArea noShowTA;
     private javax.swing.JLabel patientList;
